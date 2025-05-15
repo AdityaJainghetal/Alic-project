@@ -21,7 +21,7 @@ const [loading, setLoading] = useState(false)
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`http://localhost:8000/api/${id}`);
+        const res = await axios.get(`https://alic-project-1.onrender.com/api/${id}`);
         console.log(res)
         setProduct(res.data);
       } catch (err) {

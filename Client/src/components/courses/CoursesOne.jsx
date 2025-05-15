@@ -147,7 +147,7 @@
 //   useEffect(() => {
 //     const fetchCourses = async () => {
 //       try {
-//         const response = await fetch('http://localhost:8000/api/allcourse');
+//         const response = await fetch('https://alic-project-1.onrender.com/api/allcourse');
 //         if (!response.ok) {
 //           throw new Error('Failed to fetch courses');
 //         }
@@ -268,7 +268,7 @@ export const CoursesOne = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/allcourse');
+        const response = await fetch('https://alic-project-1.onrender.com/api/allcourse');
         if (!response.ok) {
           throw new Error('Failed to fetch courses');
         }
@@ -378,7 +378,7 @@ export default CoursesOne;
 
 // export const CoursesOne = () => {
 //   const [courses, setCourses] = useState([]);
-//   const api = 'http://localhost:8000/api/allcourse';
+//   const api = 'https://alic-project-1.onrender.com/api/allcourse';
 
 //   useEffect(() => {
 //     const fetchCourses = async () => {

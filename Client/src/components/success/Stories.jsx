@@ -18,7 +18,7 @@ import { Layout } from "../../layouts/Layout";
  useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const response = await fetch('http://localhost:8000/success/display');
+        const response = await fetch('https://alic-project-1.onrender.com/success/display');
         if (!response.ok) {
           throw new Error('Failed to fetch courses');
         }
@@ -33,7 +33,7 @@ import { Layout } from "../../layouts/Layout";
 
     fetchCourses();
   }, []);
- const api = 'http://localhost:8000/success/display';
+ const api = 'https://alic-project-1.onrender.com/success/display';
 
 const successStories = [
   { name: "DWIJ SINGH SENGAR", service: "CHHATTISGARH JUDICIAL SERVICES - 2023", image: post1 },

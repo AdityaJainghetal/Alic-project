@@ -18,7 +18,7 @@
 //   useEffect(() => {
 //     const fetchBanners = async () => {
 //       try {
-//         const response = await axios.get('http://localhost:8000/banner/alldisplay');
+//         const response = await axios.get('https://alic-project-1.onrender.com/banner/alldisplay');
 //         setBanners(response.data);
 //       } catch (error) {
 //         console.error('Error fetching banners:', error);
@@ -34,7 +34,7 @@
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 //     try {
-//       const response = await axios.post('http://localhost:8000/query/create', formData);
+//       const response = await axios.post('https://alic-project-1.onrender.com/query/create', formData);
 //       console.log(response.data);
 //       alert("Query submitted successfully!");
 //       setFormData({
@@ -295,7 +295,8 @@ export const HeroThree = () => {
   useEffect(() => {
     const fetchBanners = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/banner/alldisplay");
+        const response = await axios.get("https://alic-project-1.onrender.com/banner/alldisplay");
+        // https://alic-project-1.onrender.com
         setBanners(response.data);
       } catch (error) {
         console.error("Error fetching banners:", error);
@@ -311,7 +312,7 @@ export const HeroThree = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8000/query/create", formData);
+      const response = await axios.post("https://alic-project-1.onrender.com/query/create", formData);
       console.log(response.data);
       alert("Query submitted successfully!");
       setFormData({

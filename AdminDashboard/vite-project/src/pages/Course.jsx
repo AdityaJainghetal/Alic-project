@@ -77,7 +77,7 @@
 // //   const handleSubmit = async (e) => {
 // //     e.preventDefault();
 // //     try {
-// //       const api = 'http://localhost:8000/api/course';
+// //       const api = 'https://alic-project-1.onrender.com/api/course';
 
 // //       const response = await axios.post(api, input);
 // //       console.log(response.data);
@@ -392,7 +392,7 @@
 //     imageFiles.forEach((file) => formData.append('images', file));
 
 //     try {
-//       const api = 'http://localhost:8000/api/course';
+//       const api = 'https://alic-project-1.onrender.com/api/course';
 //       const response = await axios.post(api, formData, {
 //         headers: { 'Content-Type': 'multipart/form-data' },
 //       });
@@ -585,7 +585,7 @@ const Course = () => {
     imageFiles.forEach((file) => formData.append('images', file));
 
     try {
-      const api = 'http://localhost:8000/api/course';
+      const api = 'https://alic-project-1.onrender.com/api/course';
       const response = await axios.post(api, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });

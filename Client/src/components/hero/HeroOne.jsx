@@ -30,7 +30,7 @@ export const HeroOne = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     
-     const api = 'http://localhost:8000/query/create';
+     const api = 'https://alic-project-1.onrender.com/query/create';
 
     
     console.log("Form submitted", formData);
