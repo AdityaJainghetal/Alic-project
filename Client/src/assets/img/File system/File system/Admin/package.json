@@ -33,7 +33,7 @@
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
     "lodash.clonedeep": "^4.5.0",
-    "mdbreact": "^4.6.1",
+    "mdbreact": "^4.27.0",
     "metismenujs": "^1.4.0",
     "mkdirp": "^3.0.1",
     "moment": "2.30.1",
