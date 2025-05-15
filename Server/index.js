@@ -22,6 +22,8 @@ app.use(fileUpload());
 const QueryRoutes = require("./Routes/QueryRoutes")
 const BannerRoutes = require("./Routes/BannerRoute")
 const CourseRoute = require("./Routes/CourseRoute")
+const AllSuccessRoute = require("./Routes/SucessRoute")
+
 // app.use("/uploads", express.static("uploads"));
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
@@ -35,6 +37,7 @@ app.use(bodyparser.json())
  app.use("/query", QueryRoutes)
  app.use("/banner", BannerRoutes)
  app.use("/api", CourseRoute)
+ app.use("/success", AllSuccessRoute)
 
 
 

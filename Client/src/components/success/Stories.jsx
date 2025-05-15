@@ -15,6 +15,26 @@ import post4 from "../../assets/alec-img/success/top4.jpg";
 import post5 from "../../assets/alec-img/success/top5.jpg";
 import { Layout } from "../../layouts/Layout";
 
+ useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/success/display');
+        if (!response.ok) {
+          throw new Error('Failed to fetch courses');
+        }
+        const data = await response.json();
+        setCourses(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+ const api = 'http://localhost:8000/success/display';
+
 const successStories = [
   { name: "DWIJ SINGH SENGAR", service: "CHHATTISGARH JUDICIAL SERVICES - 2023", image: post1 },
   { name: "ANJEETA KHUTEY", service: "CHHATTISGARH JUDICIAL SERVICES - 2023", image: post2 },

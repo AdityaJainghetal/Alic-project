@@ -47,11 +47,11 @@ const Sidebar = () => {
       ]
     },
     {
-      name: 'Contact',
+      name: 'SucessStory',
       icon: <FiMail />,
       subItems: [
-        { name: 'All Query', to: '/allquerydisplay' },
-        { name: 'Feedback', to: '/contact/feedback' },
+        { name: 'SucessStory', to: '/sucessStory' },
+        { name: 'SuccessStory Display', to: '/sucessStorydisplay' },
       ]
     }
   ];

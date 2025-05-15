@@ -6,6 +6,8 @@ import Banner from './pages/Banner';
 import CourseDisplay from './pages/CourseDisplay';
 import Bannerdisplay from './pages/Bannerdisplay';
 import QueryDisplay from './pages/QueryDisplay';
+import SuccessStory from './pages/SuccessStory';
+import SucessStroydisplay from './pages/SucessStroydisplay';
 
 
 const App = () => {
@@ -18,7 +20,8 @@ const App = () => {
         <Route path='/allcourse' element={<CourseDisplay/>}/>
         <Route path='/allbanner' element={<Bannerdisplay/>}/>
         <Route path='/allquerydisplay' element={<QueryDisplay/>}/>
-
+        <Route path="/sucessStory"  element={<SuccessStory/>}/>
+        <Route path="/sucessStorydisplay" element={<SucessStroydisplay/>}/>
 
 
         
