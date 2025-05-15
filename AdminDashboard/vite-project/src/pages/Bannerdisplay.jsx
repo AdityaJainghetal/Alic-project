@@ -97,12 +97,11 @@
 
 // export default Bannerdisplay;
 
-
-
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Bannerdisplay = () => {
   const [banners, setBanners] = useState([]);
@@ -114,7 +113,7 @@ const Bannerdisplay = () => {
       const response = await axios.get(api);
       setBanners(response.data);
     } catch (error) {
-      console.error('Error fetching banners:', error);
+      toast.error('Error fetching banners');
     }
   };
 
@@ -131,10 +130,10 @@ const Bannerdisplay = () => {
 
     try {
       await axios.delete(deleteApi);
-      alert('Banner deleted successfully');
+      toast.success('Banner deleted successfully');
       loadData();
     } catch (error) {
-      console.log('Error deleting banner:', error);
+      toast.error('Error deleting banner');
     }
   };
 
@@ -213,6 +212,8 @@ const Bannerdisplay = () => {
           }}
         />
       </div>
+
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };

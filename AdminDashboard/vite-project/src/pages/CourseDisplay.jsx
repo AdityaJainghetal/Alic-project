@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const CourseDisplay = () => {
   const [courses, setCourses] = useState([]);
@@ -14,6 +16,7 @@ const CourseDisplay = () => {
         const response = await axios.get(api);
         setCourses(response.data);
       } catch (error) {
+        toast.error('Error fetching course data');
         console.error('Error fetching course data:', error);
       }
     };
@@ -29,9 +32,10 @@ const CourseDisplay = () => {
 
     try {
       await axios.delete(deleteApi);
-      alert('Course deleted successfully');
+      toast.success('Course deleted successfully');
       setCourses(prev => prev.filter(course => course._id !== id));
     } catch (error) {
+      toast.error('Error deleting course');
       console.log('Error deleting course:', error);
     }
   };
@@ -142,6 +146,8 @@ const CourseDisplay = () => {
           },
         }}
       />
+
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };

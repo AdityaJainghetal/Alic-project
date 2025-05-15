@@ -1,4 +1,4 @@
-const UserModel= require("../Module/QueryModule");
+const UserModel = require("../Module/QueryModule");
 const Course =  require( "../Module/Coursemodule")
 const imagekit = require("../Utils/imageKit");
 
@@ -20,6 +20,18 @@ const Querysave = async(req, res)=>{
           console.log(error);
     }
 }
+
+const getAllQuery = async (req, res) => {
+    try {
+        const products = await UserModel.find();
+        res.status(200).json(products);
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        res.status(500).json({ message: error.message });
+    }
+};
+
+
 
 const CourseSave = async (req, res) => {
   try {
@@ -104,6 +116,15 @@ const CourseDelete = async(req, res)=>{
 }
 
 
+const QueryDelete = async(req, res)=>{
+
+     const {id} = req.params;
+   await UserModel.findByIdAndDelete(id);
+
+    res.status(200).send("Task deleted")
+}
+
+
 
 
 const getAllCourse = async (req, res) => {
@@ -121,5 +142,8 @@ module.exports={
     Querysave,
      CourseSave,
      getAllCourse,
-     CourseDelete
+     CourseDelete,
+     getAllQuery,
+     QueryDelete
+     
 }

@@ -50,7 +50,7 @@ const Sidebar = () => {
       name: 'Contact',
       icon: <FiMail />,
       subItems: [
-        { name: 'Support', to: '/contact/support' },
+        { name: 'All Query', to: '/allquerydisplay' },
         { name: 'Feedback', to: '/contact/feedback' },
       ]
     }

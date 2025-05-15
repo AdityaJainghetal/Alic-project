@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Upload, X, CheckCircle } from 'react-feather'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 const Banner = () => {
   const [imageFiles, setImageFiles] = useState([])
   const [imagePreviews, setImagePreviews] = useState([])
   const [url, setUrl] = useState('')
-  const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
 
@@ -14,12 +15,11 @@ const Banner = () => {
     const files = Array.from(e.target.files)
 
     if (files.length + imageFiles.length > 5) {
-      setError('You can upload a maximum of 5 images')
+      toast.error('You can upload a maximum of 5 images')
       return
     }
 
     setImageFiles((prev) => [...prev, ...files.slice(0, 5 - prev.length)])
-    setError('')
 
     const newPreviews = []
     files.slice(0, 5 - imageFiles.length).forEach((file) => {
@@ -46,16 +46,15 @@ const Banner = () => {
     e.preventDefault()
 
     if (!url) {
-      setError('URL is required')
+      toast.error('URL is required')
       return
     }
 
     if (imageFiles.length === 0) {
-      setError('Please upload at least one image')
+      toast.error('Please upload at least one image')
       return
     }
 
-    setError('')
     setLoading(true)
     setSuccess(false)
 
@@ -75,13 +74,14 @@ const Banner = () => {
       )
 
       console.log('Banner uploaded:', response.data)
+      toast.success('Banner added successfully!')
       setSuccess(true)
       setUrl('')
       setImageFiles([])
       setImagePreviews([])
     } catch (err) {
       console.error('Error uploading banner:', err)
-      setError('Something went wrong while uploading')
+      toast.error('Something went wrong while uploading')
     } finally {
       setLoading(false)
     }
@@ -108,7 +108,9 @@ const Banner = () => {
 
       {/* Image Previews */}
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Banner Images</label>
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          Banner Images
+        </label>
 
         {imagePreviews.length > 0 && (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4">
@@ -174,20 +176,8 @@ const Banner = () => {
         </button>
       </div>
 
-      {/* Success Message */}
-      {success && (
-        <div className="mt-4 flex items-center justify-center text-green-600 bg-green-50 p-3 rounded-md">
-          <CheckCircle className="mr-2" size={18} />
-          <span>Banner added successfully!</span>
-        </div>
-      )}
-
-      {/* Error Message */}
-      {error && (
-        <div className="mt-4 flex items-center justify-center text-red-600 bg-red-50 p-3 rounded-md">
-          <span>{error}</span>
-        </div>
-      )}
+      {/* Toast Container */}
+      <ToastContainer position="top-right" autoClose={3000} />
     </form>
   )
 }

@@ -5,6 +5,7 @@ import Course from './pages/Course';
 import Banner from './pages/Banner';
 import CourseDisplay from './pages/CourseDisplay';
 import Bannerdisplay from './pages/Bannerdisplay';
+import QueryDisplay from './pages/QueryDisplay';
 
 
 const App = () => {
@@ -16,6 +17,8 @@ const App = () => {
         <Route path='/banner' element={<Banner/>}/>
         <Route path='/allcourse' element={<CourseDisplay/>}/>
         <Route path='/allbanner' element={<Bannerdisplay/>}/>
+        <Route path='/allquerydisplay' element={<QueryDisplay/>}/>
+
 
 
         
