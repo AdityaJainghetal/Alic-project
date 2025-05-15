@@ -26,22 +26,21 @@ const Sidebar = () => {
       subItems: [
         { name: 'My Courses', to: '/courses' },
         { name: 'All Courses', to: '/allcourse' },
-        { name: 'Course Progress', to: '/courses/progress' },
+
       ]
     },
-    { to: "/enroll", name: 'Enroll', icon: <FiUserPlus /> },
-    { to: "/banner", name: 'Banner', icon: <FiFileText /> },
+   
+  
    
 
 
 
     
     {
-      name: 'Query',
+      name: 'Banner',
       icon: <FiHelpCircle />,
       subItems: [
-        { name: 'New Query', to: '/query/new' },
-        { name: 'Query History', to: '/query/history' }, 
+        { to: "/banner", name: 'Banner', icon: <FiFileText /> },
         { to: "/allbanner", name: 'AllBanner', icon: <FiFileText /> },
 
       ]
