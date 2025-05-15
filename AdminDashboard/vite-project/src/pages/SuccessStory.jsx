@@ -3,7 +3,6 @@ import axios from 'axios'
 import { Upload, X } from 'react-feather'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-
 const SuccessStory = () => {
   const [input, setInput] = useState({
     StudentName: '',
