@@ -1,12 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useTabs } from "../../lib/hooks/useTabs";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import authorImg from "../../assets/img/others/author_1.jpg";
 import videoThumb from "../../assets/img/others/video_thumb.jpg";
 import { VideoPlayer } from "../videos/VideoPlayer";
+import axios from "axios"
+
 
 export const CourseDetailContent = () => {
+  const { id } = useParams();
+   const [product, setProduct] = useState([]);
+   const [error, setError] = useState(false); 
+
+const [loading, setLoading] = useState(false)
+
   useTabs();
+
+
+    useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        setLoading(true);
+        const res = await axios.get(`http://localhost:8000/api/${id}`);
+        console.log(res)
+        setProduct(res.data);
+      } catch (err) {
+        console.error("Failed to fetch product", err);
+        setError("Failed to load product details");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProduct();
+  }, [id])
 
   return (
     <section>
@@ -37,12 +63,11 @@ export const CourseDetailContent = () => {
                   <img src={authorImg} alt="Course author" />
                   <p className="td_heading_color mb-0 td_medium">
                     <span className="td_accent_color">Trainer:</span>
-                    <Link to="#">Mathur Rahman</Link>
+                    <a href="">{product.TrainerName}</a>
                   </p>
                 </div>
                 <div className="td_course_published td_medium td_heading_color">
-                  <span className="td_accent_color">Last Update:</span> 24 July,
-                  2024
+                  <span className="td_accent_color">Last Update:</span> {product.LastDate}
                 </div>
               </div>
 
@@ -133,69 +158,19 @@ export const CourseDetailContent = () => {
                   <div className="td_tab active" id="td_tab_1">
                     <h2 className="td_fs_48 td_mb_20">Courses Descriptions</h2>
                     <p className="mb-0">
-                      Eed a little help from our friends from time to time.
-                      Although we offer the one-stop convenience of annery
-                      integrated range of legal, financial services under one
-                      roof, there are occasions when our clients areaneed
-                      specia-. That's why we've developed close working
-                      relationships with a number of strategic partner.
-                      <br />
-                      <br />
-                      When an unknown printer took a galley of type and
-                      scrambled it to make a type specimen bookhas a not only
-                      five centuries, but also the leap into electronic
-                      typesetting.
-                    </p>
-                  </div>
-                  <div className="td_tab" id="td_tab_2">
-                    <h2 className="td_fs_48 td_mb_20">Courses Curriculum</h2>
-                    <p className="mb-0">
-                      Eed a little help from our friends from time to time.
-                      Although we offer the one-stop convenience of annery
-                      integrated range of legal, financial services under one
-                      roof, there are occasions when our clients areaneed
-                      specia-. That's why we've developed close working
-                      relationships with a number of strategic partner.
-                      <br />
-                      <br />
-                      When an unknown printer took a galley of type and
-                      scrambled it to make a type specimen bookhas a not only
-                      five centuries, but also the leap into electronic
-                      typesetting.
+                     {product.CourseDescription}
                     </p>
                   </div>
                   <div className="td_tab" id="td_tab_3">
                     <h2 className="td_fs_48 td_mb_20">Courses Instructor</h2>
                     <p className="mb-0">
-                      Eed a little help from our friends from time to time.
-                      Although we offer the one-stop convenience of annery
-                      integrated range of legal, financial services under one
-                      roof, there are occasions when our clients areaneed
-                      specia-. That's why we've developed close working
-                      relationships with a number of strategic partner.
-                      <br />
-                      <br />
-                      When an unknown printer took a galley of type and
-                      scrambled it to make a type specimen bookhas a not only
-                      five centuries, but also the leap into electronic
-                      typesetting.
+                     {product.InstructorCourse}
                     </p>
                   </div>
                   <div className="td_tab" id="td_tab_4">
                     <h2 className="td_fs_48 td_mb_20">Courses Reviews</h2>
                     <p className="mb-0">
-                      Eed a little help from our friends from time to time.
-                      Although we offer the one-stop convenience of annery
-                      integrated range of legal, financial services under one
-                      roof, there are occasions when our clients areaneed
-                      specia-. That's why we've developed close working
-                      relationships with a number of strategic partner.
-                      <br />
-                      <br />
-                      When an unknown printer took a galley of type and
-                      scrambled it to make a type specimen bookhas a not only
-                      five centuries, but also the leap into electronic
-                      typesetting.
+                     {product. Review}
                     </p>
                   </div>
                 </div>
@@ -489,7 +464,7 @@ export const CourseDetailContent = () => {
                     </svg>
                     Price :
                   </span>
-                  <span className="td_semibold td_accent_color">$69</span>
+                  <span className="td_semibold td_accent_color">{product.Price}</span>
                 </li>
                 <li>
                   <span>
@@ -571,7 +546,7 @@ export const CourseDetailContent = () => {
                     </svg>
                     Instructor :
                   </span>
-                  <span className="td_semibold td_accent_color">John Siro</span>
+                  <span className="td_semibold td_accent_color">{product.Instructor}</span>
                 </li>
                 <li>
                   <span>
@@ -605,7 +580,7 @@ export const CourseDetailContent = () => {
                     </svg>
                     Durations :
                   </span>
-                  <span className="td_semibold td_accent_color">15 Weeks</span>
+                  <span className="td_semibold td_accent_color">{product.Durations}</span>
                 </li>
                 <li>
                   <span>
@@ -623,7 +598,7 @@ export const CourseDetailContent = () => {
                     </svg>
                     Lessons :
                   </span>
-                  <span className="td_semibold td_accent_color">12</span>
+                  <span className="td_semibold td_accent_color">{product.Lessons}</span>
                 </li>
                 <li>
                   <span>
@@ -641,7 +616,7 @@ export const CourseDetailContent = () => {
                     </svg>
                     Students :
                   </span>
-                  <span className="td_semibold td_accent_color">230</span>
+                  <span className="td_semibold td_accent_color">{product.TotalStudent}</span>
                 </li>
                 <li>
                   <span>
@@ -674,7 +649,7 @@ export const CourseDetailContent = () => {
                     </svg>
                     Language :
                   </span>
-                  <span className="td_semibold td_accent_color">English</span>
+                  <span className="td_semibold td_accent_color">{product.language}</span>
                 </li>
                 <li>
                   <span>
@@ -716,7 +691,7 @@ export const CourseDetailContent = () => {
                     </svg>
                     Certifications :
                   </span>
-                  <span className="td_semibold td_accent_color">Yes</span>
+                  <span className="td_semibold td_accent_color">{product.Certification}</span>
                 </li>
               </ul>
               <div className="td_height_30 td_height_lg_30" />

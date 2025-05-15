@@ -62,7 +62,7 @@ function App() {
         <Route path="/courses-list-view" element={<CoursesListView />} />
         <Route path="/judgements" element={< Judgement/>} />
         <Route path="/judgements-details" element={< JudgementDetails/>} />
-        <Route path="/course-details" element={<CoursesDetails />} />
+        <Route path="/course-details/:id" element={<CoursesDetails />} />
         {/* -----------------About Section - Routing------------------------ */}
         <Route path="/about" element={<About />} />
         <Route path="/about-institue" element={<AboutInstitute />} />

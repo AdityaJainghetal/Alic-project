@@ -5,7 +5,7 @@ import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import heroBg from "../../assets/img/home_1/hero_bg_1.jpg";
+// import heroBg from "../../assets/img/home_1/hero_bg_1.jpg";
 // import heroBg1 from "../../assets/alec-img/slider-img/2.jpg";
 
 // import heroBg2 from "../../assets/alec-img/slider-img/3.jpg";
