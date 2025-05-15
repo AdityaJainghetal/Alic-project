@@ -1,0 +1,51 @@
+const express = require("express")
+
+const app = express();
+const path = require('path');
+const dbconnect = require('./Utils/db.config')
+const cors = require('cors');
+app.use(cors());
+
+
+require("dotenv").config()
+const mongoose= require("mongoose");
+const bodyparser = require('body-parser')
+const fileUpload = require('express-fileupload');
+
+require('dotenv').config();
+app.use(cors());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+dbconnect();
+app.use(fileUpload());
+
+const QueryRoutes = require("./Routes/QueryRoutes")
+const BannerRoutes = require("./Routes/BannerRoute")
+const CourseRoute = require("./Routes/CourseRoute")
+// app.use("/uploads", express.static("uploads"));
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+let PORT = process.env.PORT || 8000
+// Body-parser middleware
+app.use(bodyparser.urlencoded({ extended: true }))
+app.use(bodyparser.json())
+
+ app.use("/query", QueryRoutes)
+ app.use("/banner", BannerRoutes)
+ app.use("/api", CourseRoute)
+
+
+
+
+
+
+
+
+
+
+app.listen(PORT, function (error) {
+    if (error) throw error
+    console.log("Server created Successfully on PORT: ", PORT)
+})

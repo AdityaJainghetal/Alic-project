@@ -1,0 +1,16 @@
+const express = require("express");
+const route =express.Router();
+const CourseController = require("../Controller/CourseController");
+
+
+route.post("/course", CourseController.CourseSave);
+route.get("/allcourse", CourseController. getAllCourse);
+route.delete("/coursedelte/:id", CourseController. CourseDelete);
+
+
+
+
+
+
+
+module.exports =route;
