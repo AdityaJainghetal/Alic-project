@@ -10,6 +10,8 @@ route.get("/allcourse", CourseController. getAllCourse);
 route.get("/:id", CourseController.getProductById);
 
 route.delete("/coursedelte/:id", CourseController. CourseDelete);
+route.get("/courses/:id", CourseController.getCourseById);
+route.get("/courses/category/:id", CourseController.getCoursesByCategory);
 
 
 

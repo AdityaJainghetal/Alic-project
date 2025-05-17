@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const QueryDisplay = () => {
   const [courses, setCourses] = useState([]);
-  const api = 'https://alic-project-1.onrender.com/query/display';
+  const api = 'http://localhost:8000/query/display';
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -26,7 +26,7 @@ const QueryDisplay = () => {
     const confirmDelete = window.confirm('Are you sure you want to delete this course?');
     if (!confirmDelete) return;
 
-    const deleteApi = `https://alic-project-1.onrender.com/query/allquerydelete/${id}`;
+    const deleteApi = `http://localhost:8000/query/allquerydelete/${id}`;
 
     try {
       await axios.delete(deleteApi);

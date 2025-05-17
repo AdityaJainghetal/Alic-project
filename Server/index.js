@@ -23,6 +23,11 @@ const QueryRoutes = require("./Routes/QueryRoutes")
 const BannerRoutes = require("./Routes/BannerRoute")
 const CourseRoute = require("./Routes/CourseRoute")
 const AllSuccessRoute = require("./Routes/SucessRoute")
+const categoryRouter = require("./Routes/CategoryRoute");
+const EnquiryRoute = require("./Routes/EnquiryRoute");
+const ContactRoute = require("./Routes/ContactRoute")
+const EnrollRoute = require("./Routes/EnrollRoute");
+const WhatsRoute = require("./Routes/WhatsNewRoute")
 
 // app.use("/uploads", express.static("uploads"));
 mongoose.connect(process.env.MONGO_URI, {
@@ -38,6 +43,11 @@ app.use(bodyparser.json())
  app.use("/banner", BannerRoutes)
  app.use("/api", CourseRoute)
  app.use("/success", AllSuccessRoute)
+ app.use('/category', categoryRouter)
+ app.use('/enquiry', EnquiryRoute)
+ app.use("/contact", ContactRoute)
+ app.use("/enroll", EnrollRoute)
+ app.use("/whatsnew", WhatsRoute)
 
 
 

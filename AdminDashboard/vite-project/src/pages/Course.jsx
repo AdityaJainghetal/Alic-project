@@ -1,717 +1,335 @@
-// // import React, { useState } from 'react';
-// // import axios from 'axios';
-
-// // const Course = () => {
-// //   const [input, setInput] = useState({
-// //     Seat: "",
-// //     Semester: "",
-// //     Coursename: "",
-// //     StateCourse: "",
-// //     Price: "",
-// //     Instructor: "",
-// //     Durations: "",
-// //     Lessons: "",
-// //     TotalStudent: "",
-// //     language: "",
-// //     Certification: "",
-// //     CourseDescription: "",
-// //     InstructorCourse: "",
-// //     Review: "",
-// //     TrainerName: "",
-// //     LastDate: "",
-// //   });
-// //   const [imageFiles, setImageFiles] = useState([])
-
-// //     const handleImageChange = (e) => {
-// //     const files = Array.from(e.target.files)
-
-// //     if (files.length + imageFiles.length > 5) {
-// //       setError('You can upload a maximum of 5 images')
-// //       return
-// //     }
-
-// //     setImageFiles((prev) => [...prev, ...files.slice(0, 5 - prev.length)])
-// //     setError('')
-
-// //     const newPreviews = []
-// //     files.slice(0, 5 - imageFiles.length).forEach((file) => {
-// //       const reader = new FileReader()
-// //       reader.onload = (e) => {
-// //         newPreviews.push(e.target.result)
-// //         if (
-// //           newPreviews.length === files.length ||
-// //           newPreviews.length === 5 - imageFiles.length
-// //         ) {
-// //           setImagePreviews((prev) => [...prev, ...newPreviews])
-// //         }
-// //       }
-// //       reader.readAsDataURL(file)
-// //     })
-// //   }
-
-// //   const removeImage = (index) => {
-// //     setImageFiles((prev) => prev.filter((_, i) => i !== index))
-// //     setImagePreviews((prev) => prev.filter((_, i) => i !== index))
-// //   }
-
-// //      if (imageFiles.length === 0) {
-// //       setError('Please upload at least one image')
-// //       return
-// //     }
-
-// //     setError('')
-// //     setLoading(true)
-// //     setSuccess(false)
-
-// //     const formData = new FormData()
-// //     formData.append('URL', url)
-// //     imageFiles.forEach((file) => formData.append('images', file))
-
-
-
-// //   const handleInput = (e) => {
-// //     const { name, value } = e.target;
-// //     setInput((values) => ({ ...values, [name]: value }));
-// //   };
-
-// //   const handleSubmit = async (e) => {
-// //     e.preventDefault();
-// //     try {
-// //       const api = 'https://alic-project-1.onrender.com/api/course';
-
-// //       const response = await axios.post(api, input);
-// //       console.log(response.data);
-// //       alert("Registration successful!");
-// //       // navigate("/login"); // Uncomment if using react-router
-// //     } catch (error) {
-// //       console.error(error);
-// //       alert("Registration failed. Please try again.");
-// //     }
-// //   };
-
-// //   return (
-// //     <form
-// //       onSubmit={handleSubmit}
-// //       className="w-full max-w-xl mx-auto p-8 bg-gray-100 rounded-lg shadow-md"
-// //     >
-// //       <h2 className="text-2xl font-bold mb-6 text-center">Course Registration</h2>
-
-// //       <div className="mb-4">
-// //         <label className="block mb-1 font-medium">Course Name</label>
-// //         <input
-// //           type="text"
-// //           name="Coursename"
-// //           value={input.Coursename}
-// //           onChange={handleInput}
-// //           className="w-full p-2 border border-gray-300 rounded"
-// //         />
-// //       </div>
-
-
-// //           <div className="mb-4">
-// //         <label className="block mb-1 font-medium">Semester</label>
-// //         <input
-// //           type="number"
-// //           name="Semester"
-// //           value={input.Semester}
-// //           onChange={handleInput}
-// //           className="w-full p-2 border border-gray-300 rounded"
-// //         />
-// //       </div>
-
-// //       <div className="mb-4">
-// //         <label className="block mb-1 font-medium">State Course</label>
-// //         <input
-// //           type="text"
-// //           name="StateCourse"
-// //           value={input.StateCourse}
-// //           onChange={handleInput}
-// //           className="w-full p-2 border border-gray-300 rounded"
-// //         />
-// //       </div>
-
-// //       <div className="mb-4">
-// //         <label className="block mb-1 font-medium">Price</label>
-// //         <input
-// //           type="number"
-// //           name="Price"
-// //           value={input.Price}
-// //           onChange={handleInput}
-// //           className="w-full p-2 border border-gray-300 rounded"
-// //         />
-// //       </div>
-
-// //       <div className="mb-4">
-// //         <label className="block mb-1 font-medium">Instructor</label>
-// //         <input
-// //           type="text"
-// //           name="Instructor"
-// //           value={input.Instructor}
-// //           onChange={handleInput}
-// //           className="w-full p-2 border border-gray-300 rounded"
-// //         />
-// //       </div>
-
-// //       <div className="mb-4">
-// //         <label className="block mb-1 font-medium">Durations</label>
-// //         <input
-// //           type="text"
-// //           name="Durations"
-// //           value={input.Durations}
-// //           onChange={handleInput}
-// //           className="w-full p-2 border border-gray-300 rounded"
-// //         />
-// //       </div>
-
-// //       <div className="mb-4">
-// //         <label className="block mb-1 font-medium">Total Students</label>
-// //         <input
-// //           type="number"
-// //           name="TotalStudent"
-// //           value={input.TotalStudent}
-// //           onChange={handleInput}
-// //           className="w-full p-2 border border-gray-300 rounded"
-// //         />
-// //       </div>
-
-// //       <div className="mb-4">
-// //         <label className="block mb-1 font-medium">Language</label>
-// //         <input
-// //           type="text"
-// //           name="language"
-// //           value={input.language}
-// //           onChange={handleInput}
-// //           className="w-full p-2 border border-gray-300 rounded"
-// //         />
-// //       </div>
-
-// //       <div className="mb-4">
-// //         <label className="block mb-1 font-medium">Certification</label>
-// //         <input
-// //           type="text"
-// //           name="Certification"
-// //           value={input.Certification}
-// //           onChange={handleInput}
-// //           className="w-full p-2 border border-gray-300 rounded"
-// //         />
-// //       </div>
-
-// //       <div className="mb-4">
-// //         <label className="block mb-1 font-medium">Course Description</label>
-// //         <input
-// //           type="text"
-// //           name="CourseDescription"
-// //           value={input.CourseDescription}
-// //           onChange={handleInput}
-// //           className="w-full p-2 border border-gray-300 rounded"
-// //         />
-// //       </div>
-
-// //       <div className="mb-4">
-// //         <label className="block mb-1 font-medium">Instructor Course</label>
-// //         <input
-// //           type="text"
-// //           name="InstructorCourse"
-// //           value={input.InstructorCourse}
-// //           onChange={handleInput}
-// //           className="w-full p-2 border border-gray-300 rounded"
-// //         />
-// //       </div>
-
-// //       <div className="mb-4">
-// //         <label className="block mb-1 font-medium">Review</label>
-// //         <input
-// //           type="text"
-// //           name="Review"
-// //           value={input.Review}
-// //           onChange={handleInput}
-// //           className="w-full p-2 border border-gray-300 rounded"
-// //         />
-// //       </div>
-
-// //       <div className="mb-6">
-// //         <label className="block mb-1 font-medium">Last Date</label>
-// //         <input
-// //           type="date"
-// //           name="LastDate"
-// //           value={input.LastDate}
-// //           onChange={handleInput}
-// //           className="w-full p-2 border border-gray-300 rounded"
-// //         />
-// //       </div>
-
-
-// //         <div className="mb-4">
-// //               <label className="block text-sm font-medium text-gray-700 mb-2">Banner Images</label>
-      
-// //               {imagePreviews.length > 0 && (
-// //                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4">
-// //                   {imagePreviews.map((preview, index) => (
-// //                     <div key={index} className="relative group">
-// //                       <img
-// //                         src={preview}
-// //                         alt={`Preview ${index + 1}`}
-// //                         className="h-24 w-24 object-cover rounded-md border border-gray-300"
-// //                       />
-// //                       <button
-// //                         type="button"
-// //                         onClick={() => removeImage(index)}
-// //                         className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
-// //                       >
-// //                         <X size={16} />
-// //                       </button>
-// //                     </div>
-// //                   ))}
-// //                 </div>
-// //               )}
-      
-// //               {/* Upload Button */}
-// //               <label
-// //                 className={`flex items-center justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-primary-500 focus:outline-none ${
-// //                   imageFiles.length >= 5 ? 'opacity-50 cursor-not-allowed' : ''
-// //                 }`}
-// //               >
-// //                 <div className="flex flex-col items-center space-y-2">
-// //                   <Upload className="w-6 h-6 text-gray-500" />
-// //                   <span className="font-medium text-gray-600">
-// //                     Drop files or
-// //                     <span className="text-primary-600 underline ml-1">browse</span>
-// //                   </span>
-// //                   <span className="text-xs text-gray-500">
-// //                     {imageFiles.length >= 5
-// //                       ? 'Maximum 5 images reached'
-// //                       : `Upload up to 5 images (${imageFiles.length}/5)`}
-// //                   </span>
-// //                 </div>
-// //                 <input
-// //                   type="file"
-// //                   name="images"
-// //                   accept="image/*"
-// //                   multiple
-// //                   onChange={handleImageChange}
-// //                   className="hidden"
-// //                   disabled={imageFiles.length >= 5}
-// //                 />
-// //               </label>
-// //             </div>
-      
-
-// //       <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
-// //         Submit
-// //       </button>
-// //     </form>
-// //   );
-// // };
-
-// // export default Course;
-
-
-// import React, { useState } from 'react';
-// import axios from 'axios';
-// import { Upload, X } from 'lucide-react';
-
-// const Course = () => {
-//   const [input, setInput] = useState({
-//     Seat: '',
-//     Semester: '',
-//     Coursename: '',
-//     StateCourse: '',
-//     Price: '',
-//     Instructor: '',
-//     Durations: '',
-//     Lessons: '',
-//     TotalStudent: '',
-//     language: '',
-//     Certification: '',
-//     CourseDescription: '',
-//     InstructorCourse: '',
-//     Review: '',
-//     TrainerName: '',
-//     LastDate: '',
-//   });
-
-//   const [imageFiles, setImageFiles] = useState([]);
-//   const [imagePreviews, setImagePreviews] = useState([]);
-//   const [error, setError] = useState('');
-//   const [loading, setLoading] = useState(false);
-//   const [success, setSuccess] = useState(false);
-
-//   const handleInput = (e) => {
-//     const { name, value } = e.target;
-//     setInput((prev) => ({ ...prev, [name]: value }));
-//   };
-
-//   const handleImageChange = (e) => {
-//     const files = Array.from(e.target.files);
-//     if (files.length + imageFiles.length > 5) {
-//       setError('You can upload a maximum of 5 images');
-//       return;
-//     }
-
-//     const newPreviews = [];
-//     files.slice(0, 5 - imageFiles.length).forEach((file) => {
-//       const reader = new FileReader();
-//       reader.onload = (event) => {
-//         newPreviews.push(event.target.result);
-//         if (
-//           newPreviews.length === files.length ||
-//           newPreviews.length === 5 - imageFiles.length
-//         ) {
-//           setImagePreviews((prev) => [...prev, ...newPreviews]);
-//         }
-//       };
-//       reader.readAsDataURL(file);
-//     });
-
-//     setImageFiles((prev) => [...prev, ...files.slice(0, 5 - prev.length)]);
-//     setError('');
-//   };
-
-//   const removeImage = (index) => {
-//     setImageFiles((prev) => prev.filter((_, i) => i !== index));
-//     setImagePreviews((prev) => prev.filter((_, i) => i !== index));
-//   };
-
-//   const handleSubmit = async (e) => {
-//     e.preventDefault();
-
-//     if (imageFiles.length === 0) {
-//       setError('Please upload at least one image');
-//       return;
-//     }
-
-//     setError('');
-//     setLoading(true);
-//     setSuccess(false);
-
-//     const formData = new FormData();
-//     Object.entries(input).forEach(([key, value]) => {
-//       formData.append(key, value);
-//     });
-
-//     imageFiles.forEach((file) => formData.append('images', file));
-
-//     try {
-//       const api = 'https://alic-project-1.onrender.com/api/course';
-//       const response = await axios.post(api, formData, {
-//         headers: { 'Content-Type': 'multipart/form-data' },
-//       });
-
-//       console.log(response.data);
-//       alert('Course registration successful!');
-//       setSuccess(true);
-//       setInput({});
-//       setImageFiles([]);
-//       setImagePreviews([]);
-//     } catch (err) {
-//       console.error(err);
-//       alert('Course registration failed.');
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   return (
-//     <form
-//       onSubmit={handleSubmit}
-//       className="w-full max-w-xl mx-auto p-8 bg-gray-100 rounded-lg shadow-md"
-//     >
-//       <h2 className="text-2xl font-bold mb-6 text-center">Course Registration</h2>
-
-//       {Object.keys(input).map((key) => (
-//         <div className="mb-4" key={key}>
-//           <label className="block mb-1 font-medium capitalize">{key}</label>
-//           <input
-//             type={key === 'Price' || key === 'Semester' || key === 'TotalStudent' ? 'number' : key === 'LastDate' ? 'date' : 'text'}
-//             name={key}
-//             value={input[key]}
-//             onChange={handleInput}
-//             className="w-full p-2 border border-gray-300 rounded"
-//           />
-//         </div>
-//       ))}
-
-//       <div className="mb-4">
-//         <label className="block text-sm font-medium text-gray-700 mb-2">Banner Images</label>
-
-//         {imagePreviews.length > 0 && (
-//           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4">
-//             {imagePreviews.map((preview, index) => (
-//               <div key={index} className="relative group">
-//                 <img
-//                   src={preview}
-//                   alt={`Preview ${index + 1}`}
-//                   className="h-24 w-24 object-cover rounded-md border border-gray-300"
-//                 />
-//                 <button
-//                   type="button"
-//                   onClick={() => removeImage(index)}
-//                   className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
-//                 >
-//                   <X size={16} />
-//                 </button>
-//               </div>
-//             ))}
-//           </div>
-//         )}
-
-//         <label
-//           className={`flex items-center justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-primary-500 focus:outline-none ${
-//             imageFiles.length >= 5 ? 'opacity-50 cursor-not-allowed' : ''
-//           }`}
-//         >
-//           <div className="flex flex-col items-center space-y-2">
-//             <Upload className="w-6 h-6 text-gray-500" />
-//             <span className="font-medium text-gray-600">
-//               Drop files or <span className="text-primary-600 underline ml-1">browse</span>
-//             </span>
-//             <span className="text-xs text-gray-500">
-//               {imageFiles.length >= 5
-//                 ? 'Maximum 5 images reached'
-//                 : `Upload up to 5 images (${imageFiles.length}/5)`}
-//             </span>
-//           </div>
-//           <input
-//             type="file"
-//             name="images"
-//             accept="image/*"
-//             multiple
-//             onChange={handleImageChange}
-//             className="hidden"
-//             disabled={imageFiles.length >= 5}
-//           />
-//         </label>
-//       </div>
-
-//       {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-
-//       <button
-//         type="submit"
-//         disabled={loading}
-//         className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-//       >
-//         {loading ? 'Submitting...' : 'Submit'}
-//       </button>
-//     </form>
-//   );
-// };
-
-// export default Course;
-
-
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Upload, X } from 'lucide-react';
+import { fetchcategory } from "../api";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Course = () => {
-  const [input, setInput] = useState({
+  const initialFormState = {
+    Coursename: '',
+    category: '',
     Seat: '',
     Semester: '',
-    Coursename: '',
-    StateCourse: '',
     Price: '',
-    Instructor: '',
-    Durations: '',
-    Lessons: '',
+    URL: "",
+    StateCourse: '',
+    TrainerName: '',
     TotalStudent: '',
     language: '',
+    Lessons: '',
+    Instructor: '',
+    Durations: '',
     Certification: '',
     CourseDescription: '',
     InstructorCourse: '',
     Review: '',
-    TrainerName: '',
     LastDate: '',
-  });
+  };
 
+  const [formData, setFormData] = useState(initialFormState);
   const [imageFiles, setImageFiles] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
-  const [error, setError] = useState('');
+  const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
-  const handleInput = (e) => {
+  useEffect(() => {
+    const fetchCategories = async () => {
+      setLoading(true);
+      try {
+        const response = await fetchcategory();
+        if (response.data) {
+          setCategories(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        toast.error("Failed to load categories. Please try again.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  const validateForm = () => {
+    const newErrors = {};
+    if (!formData.Coursename) newErrors.Coursename = 'Course name is required';
+    if (!formData.category) newErrors.category = 'Category is required';
+    if (!formData.Price) newErrors.Price = 'Price is required';
+    if (imageFiles.length === 0) newErrors.images = 'At least one image is required';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setInput((prev) => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: '' }));
+    }
   };
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     if (files.length + imageFiles.length > 5) {
-      setError('You can upload a maximum of 5 images');
+      setErrors(prev => ({ ...prev, images: 'You can upload a maximum of 5 images' }));
       return;
     }
 
     const newPreviews = [];
-    files.slice(0, 5 - imageFiles.length).forEach((file) => {
+    const validFiles = files.slice(0, 5 - imageFiles.length);
+    validFiles.forEach((file) => {
       const reader = new FileReader();
       reader.onload = (event) => {
         newPreviews.push(event.target.result);
-        if (
-          newPreviews.length === files.length ||
-          newPreviews.length === 5 - imageFiles.length
-        ) {
-          setImagePreviews((prev) => [...prev, ...newPreviews]);
+        if (newPreviews.length === validFiles.length) {
+          setImagePreviews(prev => [...prev, ...newPreviews]);
         }
       };
       reader.readAsDataURL(file);
     });
 
-    setImageFiles((prev) => [...prev, ...files.slice(0, 5 - prev.length)]);
-    setError('');
+    setImageFiles(prev => [...prev, ...validFiles]);
+    setErrors(prev => ({ ...prev, images: '' }));
   };
 
   const removeImage = (index) => {
-    setImageFiles((prev) => prev.filter((_, i) => i !== index));
-    setImagePreviews((prev) => prev.filter((_, i) => i !== index));
+    setImageFiles(prev => prev.filter((_, i) => i !== index));
+    setImagePreviews(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (imageFiles.length === 0) {
-      toast.error('Please upload at least one image');
-      return;
-    }
+    if (!validateForm()) return;
 
     setLoading(true);
+    const formDataToSend = new FormData();
 
-    const formData = new FormData();
-    Object.entries(input).forEach(([key, value]) => {
-      formData.append(key, value);
+    Object.entries(formData).forEach(([key, value]) => {
+      if (value) formDataToSend.append(key, value);
     });
 
-    imageFiles.forEach((file) => formData.append('images', file));
+    imageFiles.forEach((file) => {
+      formDataToSend.append('images', file);
+    });
 
     try {
-      const api = 'https://alic-project-1.onrender.com/api/course';
-      const response = await axios.post(api, formData, {
+      const response = await axios.post('http://localhost:8000/api/course', formDataToSend, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
-      toast.success('Course registration successful!');
-      setInput({
-        Seat: '',
-        Semester: '',
-        Coursename: '',
-        StateCourse: '',
-        Price: '',
-        Instructor: '',
-        Durations: '',
-        Lessons: '',
-        TotalStudent: '',
-        language: '',
-        Certification: '',
-        CourseDescription: '',
-        InstructorCourse: '',
-        Review: '',
-        TrainerName: '',
-        LastDate: '',
-      });
+      toast.success('Course created successfully!');
+      setFormData(initialFormState);
       setImageFiles([]);
       setImagePreviews([]);
-    } catch (err) {
-      console.error(err);
-      toast.error('Course registration failed.');
+    } catch (error) {
+      console.error('Error creating course:', error);
+      toast.error(error.response?.data?.message || 'Failed to create course');
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <form
-      onSubmit={handleSubmit}
-      className="w-full max-w-5xl mx-auto p-8 bg-gray-100 rounded-lg shadow-md"
-    >
-      <ToastContainer position="top-center" />
-      <h2 className="text-2xl font-bold mb-6 text-center">Course Registration</h2>
+  const basicInfoFields = [
+    { name: 'Coursename', label: 'Course Name', type: 'text', required: true },
+    { name: 'Seat', label: 'Available Seats', type: 'number' },
+    { name: 'Semester', label: 'Semester', type: 'number' },
+    { name: 'Price', label: 'Price', type: 'number', required: true },
+    { name: 'URL', label: 'Course URL', type: 'text' }, // <-- Added field
+  ];
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {Object.keys(input).map((key) => (
-          <div className="" key={key}>
-            <label className="block mb-1 font-medium capitalize">{key}</label>
-            <input
-              type={
-                key === 'Price' || key === 'Semester' || key === 'TotalStudent'
-                  ? 'number'
-                  : key === 'LastDate'
-                  ? 'date'
-                  : 'text'
-              }
-              name={key}
-              value={input[key]}
-              onChange={handleInput}
-              className="w-full p-2 border border-gray-300 rounded"
-            />
-          </div>
-        ))}
-      </div>
+  const courseDetailsFields = [
+    { name: 'StateCourse', label: 'Course State', type: 'text' },
+    { name: 'TrainerName', label: 'Trainer Name', type: 'text' },
+    { name: 'TotalStudent', label: 'Total Students', type: 'number' },
+    { name: 'language', label: 'Language', type: 'text' },
+    { name: 'Lessons', label: 'Number of Lessons', type: 'number' },
+    { name: 'Instructor', label: 'Instructor', type: 'text' },
+    { name: 'Durations', label: 'Duration', type: 'text' },
+    { name: 'Certification', label: 'Certification', type: 'text' },
+  ];
 
-      <div className="my-6">
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          Banner Images
-        </label>
+  const descriptionFields = [
+    { name: 'CourseDescription', label: 'Description', type: 'text', textarea: true },
+    { name: 'InstructorCourse', label: 'Instructor Info', type: 'text', textarea: true },
+    { name: 'Review', label: 'Reviews', type: 'text', textarea: true },
+  ];
 
-        {imagePreviews.length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4">
-            {imagePreviews.map((preview, index) => (
-              <div key={index} className="relative group">
-                <img
-                  src={preview}
-                  alt={`Preview ${index + 1}`}
-                  className="h-24 w-24 object-cover rounded-md border border-gray-300"
-                />
-                <button
-                  type="button"
-                  onClick={() => removeImage(index)}
-                  className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  <X size={16} />
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
+  const otherFields = [
+    { name: 'LastDate', label: 'Last Date to Enroll', type: 'date' },
+  ];
 
-        <label
-          className={`flex items-center justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-primary-500 focus:outline-none ${
-            imageFiles.length >= 5 ? 'opacity-50 cursor-not-allowed' : ''
-          }`}
-        >
-          <div className="flex flex-col items-center space-y-2">
-            <Upload className="w-6 h-6 text-gray-500" />
-            <span className="font-medium text-gray-600">
-              Drop files or <span className="text-primary-600 underline ml-1">browse</span>
-            </span>
-            <span className="text-xs text-gray-500">
-              {imageFiles.length >= 5
-                ? 'Maximum 5 images reached'
-                : `Upload up to 5 images (${imageFiles.length}/5)`}
-            </span>
-          </div>
-          <input
-            type="file"
-            name="images"
-            accept="image/*"
-            multiple
-            onChange={handleImageChange}
-            className="hidden"
-            disabled={imageFiles.length >= 5}
-          />
-        </label>
-      </div>
-
-      {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+  const renderCategorySelect = () => (
+    <div className="space-y-1">
+      <label className="block text-sm font-medium text-gray-700">
+        Category <span className="text-red-500">*</span>
+      </label>
+      <select
+        name="category"
+        value={formData.category}
+        onChange={handleInputChange}
+        className={`w-full p-2 border ${errors.category ? 'border-red-500' : 'border-gray-300'} rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
       >
-        {loading ? 'Submitting...' : 'Submit'}
-      </button>
-    </form>
+        <option value="">Select a category</option>
+        {categories.map((category) => (
+          <option key={category._id} value={category._id}>
+            {category.name}
+          </option>
+        ))}
+      </select>
+      {errors.category && (
+        <p className="text-red-500 text-xs mt-1">{errors.category}</p>
+      )}
+    </div>
+  );
+
+  const renderInputField = (field) => (
+    <div key={field.name} className="space-y-1">
+      <label className="block text-sm font-medium text-gray-700">
+        {field.label}
+        {field.required && <span className="text-red-500">*</span>}
+      </label>
+      {field.textarea ? (
+        <textarea
+          name={field.name}
+          value={formData[field.name]}
+          onChange={handleInputChange}
+          className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          rows={3}
+        />
+      ) : (
+        <input
+          type={field.type}
+          name={field.name}
+          value={formData[field.name]}
+          onChange={handleInputChange}
+          className={`w-full p-2 border ${errors[field.name] ? 'border-red-500' : 'border-gray-300'} rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent`}
+        />
+      )}
+      {errors[field.name] && (
+        <p className="text-red-500 text-xs mt-1">{errors[field.name]}</p>
+      )}
+    </div>
+  );
+
+  return (
+    <div className="min-h-screen bg-gray-50 py-8 px-4">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-5xl mx-auto p-8 bg-white rounded-lg shadow-md"
+      >
+        <ToastContainer position="top-center" autoClose={3000} />
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Course Registration</h2>
+
+        <div className="mb-8">
+          <h3 className="text-lg font-semibold mb-4 text-gray-700 border-b pb-2">Basic Information</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {basicInfoFields.map(renderInputField)}
+            {renderCategorySelect()}
+          </div>
+        </div>
+
+        <div className="mb-8">
+          <h3 className="text-lg font-semibold mb-4 text-gray-700 border-b pb-2">Course Details</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {courseDetailsFields.map(renderInputField)}
+            {renderCategorySelect()}
+          </div>
+        </div>
+
+        <div className="mb-8">
+          <h3 className="text-lg font-semibold mb-4 text-gray-700 border-b pb-2">Descriptions</h3>
+          <div className="grid grid-cols-1 gap-6">
+            {descriptionFields.map(renderInputField)}
+          </div>
+        </div>
+
+        <div className="mb-8">
+          <h3 className="text-lg font-semibold mb-4 text-gray-700 border-b pb-2">Other Information</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {otherFields.map(renderInputField)}
+          </div>
+        </div>
+
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Banner Images <span className="text-red-500">*</span>
+          </label>
+
+          {imagePreviews.length > 0 && (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-4">
+              {imagePreviews.map((preview, index) => (
+                <div key={index} className="relative group">
+                  <img
+                    src={preview}
+                    alt={`Preview ${index + 1}`}
+                    className="h-24 w-full object-cover rounded-md border border-gray-300"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeImage(index)}
+                    className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full p-1 shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <X size={16} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <label
+            className={`flex flex-col items-center justify-center w-full h-32 px-4 transition bg-white border-2 ${
+              errors.images ? 'border-red-500' : 'border-gray-300'
+            } border-dashed rounded-md appearance-none cursor-pointer hover:border-blue-500 focus:outline-none ${
+              imageFiles.length >= 5 ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+          >
+            <div className="flex flex-col items-center space-y-2">
+              <Upload className="w-6 h-6 text-gray-500" />
+              <span className="font-medium text-gray-600">
+                Drop files or <span className="text-blue-600 underline ml-1">browse</span>
+              </span>
+              <span className="text-xs text-gray-500">
+                {imageFiles.length >= 5
+                  ? 'Maximum 5 images reached'
+                  : `Upload up to 5 images (${imageFiles.length}/5)`}
+              </span>
+            </div>
+            <input
+              type="file"
+              name="images"
+              accept="image/*"
+              multiple
+              onChange={handleImageChange}
+              className="hidden"
+              disabled={imageFiles.length >= 5}
+            />
+          </label>
+          {errors.images && (
+            <p className="text-red-500 text-xs mt-1">{errors.images}</p>
+          )}
+        </div>
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-blue-600 text-white py-3 rounded-md hover:bg-blue-700 transition-colors disabled:bg-blue-400 disabled:cursor-not-allowed flex items-center justify-center"
+        >
+          {loading ? (
+            <>
+              <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Processing...
+            </>
+          ) : (
+            'Create Course'
+          )}
+        </button>
+      </form>
+    </div>
   );
 };
 

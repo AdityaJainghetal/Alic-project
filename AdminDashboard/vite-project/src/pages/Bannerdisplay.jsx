@@ -4,7 +4,7 @@
 
 // const Bannerdisplay = () => {
 //   const [banners, setBanners] = useState([]);
-//   const api = 'https://alic-project-1.onrender.com/banner/alldisplay';
+//   const api = 'http://localhost:8000/banner/alldisplay';
 
 //   useEffect(() => {
 //     const fetchBanners = async () => {
@@ -21,7 +21,7 @@
 
   
 //     const deluser = async (id) => {
-//         let api = `https://alic-project-1.onrender.com/banner/deleted/?id=${id}`;
+//         let api = `http://localhost:8000/banner/deleted/?id=${id}`;
 
 //         try {
 //             await axios.get(api);
@@ -105,7 +105,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const Bannerdisplay = () => {
   const [banners, setBanners] = useState([]);
-  const api = 'https://alic-project-1.onrender.com/banner/alldisplay';
+  const api = 'http://localhost:8000/banner/alldisplay';
 
   // Load banners
   const loadData = async () => {
@@ -126,7 +126,7 @@ const Bannerdisplay = () => {
     const confirmDelete = window.confirm('Are you sure you want to delete this banner?');
     if (!confirmDelete) return;
 
-    const deleteApi = `https://alic-project-1.onrender.com/banner/deleted/${id}`;
+    const deleteApi = `http://localhost:8000/banner/deleted/${id}`;
 
     try {
       await axios.delete(deleteApi);

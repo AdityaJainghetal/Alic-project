@@ -1,23 +1,60 @@
 
+// import { createRoot } from "react-dom/client";
+// import App from "./App.jsx";
+// import { BrowserRouter } from "react-router-dom";
+// import './style.css'
+// // necessary css
+// import "bootstrap/dist/css/bootstrap.min.css";
+// import "./assets/css/fontawesome.min.css";
+// import "./assets/css/animate.css";
+// import "./assets/css/jquery-ui.min.css";
+// import "./assets/css/style.css";
+// import {Provider} from "react-redux"
+// // necessary js
+// import "bootstrap/dist/js/bootstrap.bundle.min.js";
+// import "./assets/js/jquery-ui.min.js";
+// import { ToastContainer } from "react-toastify";
+// import {store} from "../../Client/Redux/store.jsx"
+// createRoot(document.getElementById("root")).render(
+//   <BrowserRouter>
+//   <Provider store={store}>
+//     <ToastContainer position="top-right" autoClose={5000} />
+//     <App />
+//     </Provider>
+//   </BrowserRouter>
+// );
+
+
+// Core React imports
 import { createRoot } from "react-dom/client";
-import App from "./App.jsx";
 import { BrowserRouter } from "react-router-dom";
-import './style.css'
-// necessary css
+import { Provider } from "react-redux";
+
+// App and store
+import App from "./App.jsx";
+import { store } from "../../Client/Redux/store.jsx";
+
+// Toast notifications
+import { ToastContainer } from "react-toastify";
+
+// CSS imports
+import "./style.css"; // Your main custom styles
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/css/fontawesome.min.css";
 import "./assets/css/animate.css";
 import "./assets/css/jquery-ui.min.css";
 import "./assets/css/style.css";
 
-// necessary js
+// JS imports (Bootstrap & jQuery UI)
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./assets/js/jquery-ui.min.js";
-import { ToastContainer } from "react-toastify";
 
+// Render the app
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
-    <ToastContainer position="top-right" autoClose={5000} />
-    <App />
+    <Provider store={store}>
+      <ToastContainer position="top-right" autoClose={5000} />
+      <App />
+    </Provider>
   </BrowserRouter>
 );

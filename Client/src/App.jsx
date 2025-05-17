@@ -43,6 +43,7 @@ import { Judgement } from "./pages/course/Judgement";
 import { JudgementDetails } from "./pages/course/JudgementDetails";
 import OnlineClassesPage from "./pages/online/OnlineClassesPage";
 import { HomeThree } from "./pages/home/HomeThree";
+import { CouresesNine } from "./components/courses/CouresesNine";
 
 // import { AboutWhy } from "./lib/about/AboutWhy";
 
@@ -88,8 +89,10 @@ function App() {
         <Route path="/blog-details" element={<BlogDetails />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/enquiry" element={<Enquiry />} />
-        <Route path="/enroll" element={<Enroll />} />
+        <Route path="/enroll/:id" element={<Enroll />} />
         <Route path="/privacy" element={<PrivacyPolicy />} />
+        {/* <Route path="/course-details/:id" element={<CouresesNine />} /> */}
+
 
         <Route path="*" element={<Error />} />
       </Routes>

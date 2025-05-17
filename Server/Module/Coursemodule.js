@@ -27,14 +27,21 @@ const courseSchema = new mongoose.Schema({
   Instructor: {
     type: String,
   },
+     URL : {
+            type: String
+        },
   Durations: {
     type: String,
   },
   Lessons: {
-    type: String,
+    type: Number,
   },
   TotalStudent: {
     type: Number,
+  },
+   category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category"
   },
   language: {
     type: String,

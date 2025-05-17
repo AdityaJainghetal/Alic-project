@@ -1,5 +1,6 @@
 // import React from "react";
 // import "bootstrap/dist/css/bootstrap.min.css";
+// import React, { useEffect, useState } from "react";
 // import "swiper/css";
 // import "swiper/css/pagination";
 // import "swiper/css/navigation";
@@ -14,28 +15,6 @@
 // import post4 from "../../assets/alec-img/success/top4.jpg";
 // import post5 from "../../assets/alec-img/success/top5.jpg";
 // import { Layout } from "../../layouts/Layout";
-// import { useEffect } from "react";
-
-// useEffect(() => {
-//   const fetchCourses = async () => {
-//     try {
-//       const response = await fetch('https://alic-project-1.onrender.com/success/display');
-//       if (!response.ok) {
-//         throw new Error('Failed to fetch courses');
-//       }
-//       const data = await response.json();
-//       setCourses(data);
-//     } catch (err) {
-//       setError(err.message);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
-
-//   fetchCourses();
-// }, []);
-
-  
 
 // const successStories = [
 //   { name: "DWIJ SINGH SENGAR", service: "CHHATTISGARH JUDICIAL SERVICES - 2023", image: post1 },
@@ -54,6 +33,30 @@
 
 // export const SuccessStory = () => {
 //   return (
+//      const [stories, setStories] = useState([]);
+//    const [loading, setLoading] = useState(true);
+//  const [error, setError] = useState("");
+
+
+//    useEffect(() => {
+//     const fetchStories = async () => {
+//       try {
+//         const response = await fetch("http://localhost:8000/success/display");
+//         if (!response.ok) {
+//           throw new Error("Failed to fetch success stories");
+//         }
+//         const data = await response.json();
+//         setStories(data);
+//       } catch (err) {
+//         setError(err.message);
+//       } finally {
+//         setLoading(false);
+//        }
+//      };
+    
+//      const storiesToShow = stories.length > 0 ? stories : staticStories;
+
+
 
 //       <section className="py-5 text-center bg-light mt-0 mt-md-5">
 //         <div className="px-3 px-md-5">
@@ -79,18 +82,18 @@
 //             }}
 //             className="mySwiper"
 //           >
-//             {successStories.map((story, index) => (
+//               {storiesToShow.map((story, index) => (
 //               <SwiperSlide key={index}>
 //                 <div className="card border-0 shadow-sm p-3 rounded-3 h-100">
 //                   <img
-//                     src={story.image}
-//                     alt={story.name}
+//                    src={story.images ? story.images[0] : story.image}
+//                   alt={story.StudentName || story.name}
 //                     className="card-img-top rounded-3"
 //                     style={{ height: "230px", objectFit: "cover" }}
 //                   />
 //                   <div className="card-body">
-//                     <h5 className="card-title fw-bold text-dark">{story.name}</h5>
-//                     <p className="card-text text-muted">{story.service}</p>
+//                     <h5 className="card-title fw-bold text-dark">    {story.StudentName || story.name}</h5>
+//                     <p className="card-text text-muted"> {story.Judicial || story.service}</p>
 //                   </div>
 //                 </div>
 //               </SwiperSlide>
@@ -98,11 +101,9 @@
 //           </Swiper>
 //         </div>
 //       </section>
-
-//   );
+//     )
 // };
 
-// export default SuccessStory;
 
 
 import React, { useEffect, useState } from "react";
@@ -129,19 +130,19 @@ const staticStories = [
 ];
 
 export const SuccessStory = () => {
-  const [courses, setCourses] = useState([]);
+  const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchCourses = async () => {
+    const fetchStories = async () => {
       try {
-        const response = await fetch('https://alic-project-1.onrender.com/success/display');
+        const response = await fetch("http://localhost:8000/success/display");
         if (!response.ok) {
-          throw new Error('Failed to fetch courses');
+          throw new Error("Failed to fetch success stories");
         }
         const data = await response.json();
-        setCourses(data);
+        setStories(data);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -149,18 +150,16 @@ export const SuccessStory = () => {
       }
     };
 
-    fetchCourses();
+    fetchStories();
   }, []);
 
-  const storiesToShow = courses.length ? courses : staticStories;
+  const storiesToShow = stories.length > 0 ? stories : staticStories;
 
   return (
     <section className="py-5 text-center bg-light mt-0 mt-md-5">
       <div className="px-3 px-md-5">
         <h2 className="text-danger fw-bold text-uppercase">Success Story</h2>
-        <h3 className="fs-2 fw-bold mt-2 mb-4 text-dark">
-          Our Recent Success Stories
-        </h3>
+        <h3 className="fs-2 fw-bold mt-2 mb-4 text-dark">Our Recent Success Stories</h3>
 
         {error && <p className="text-danger">Error: {error}</p>}
 
@@ -183,14 +182,18 @@ export const SuccessStory = () => {
             <SwiperSlide key={index}>
               <div className="card border-0 shadow-sm p-3 rounded-3 h-100">
                 <img
-                  src={story.image}
-                  alt={story.name}
+                  src={story.images ? story.images[0] : story.image}
+                  alt={story.StudentName || story.name}
                   className="card-img-top rounded-3"
                   style={{ height: "230px", objectFit: "cover" }}
                 />
                 <div className="card-body">
-                  <h5 className="card-title fw-bold text-dark">{story.name}</h5>
-                  <p className="card-text text-muted">{story.service}</p>
+                  <h5 className="card-title fw-bold text-dark">
+                    {story.StudentName || story.name}
+                  </h5>
+                  <p className="card-text text-muted">
+                    {story.Judicial || story.service}
+                  </p>
                 </div>
               </div>
             </SwiperSlide>

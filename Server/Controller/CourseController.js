@@ -33,6 +33,84 @@ const getAllQuery = async (req, res) => {
 
 
 
+// const CourseSave = async (req, res) => {
+//   try {
+//     const {
+//       Seat,
+//       Semester,
+//       Coursename,
+//       StateCourse,
+//       Price,
+//       Instructor,
+//       Durations,
+//       Lessons,
+//       URL,
+//       TotalStudent,
+//       language,
+//       Certification,
+//       CourseDescription,
+//       InstructorCourse,
+//       Review,
+//       TrainerName,
+//       LastDate,
+//       size, // ensure `size` is destructured
+//     } = req.body;
+
+//     // Parse JSON string if needed
+//     const parsedSize = typeof size === 'string' ? JSON.parse(size) : size;
+
+//     // Handle image uploads
+//     const uploadedImages = [];
+//     const files = Array.isArray(req.files?.images)
+//       ? req.files.images
+//       : [req.files?.images].filter(Boolean);
+
+//     for (let file of files) {
+//       const buffer = file.data;
+//       const uploadResponse = await imagekit.upload({
+//         file: buffer,
+//         fileName: file.name,
+//       });
+//       uploadedImages.push(uploadResponse.url);
+//     }
+
+//     // Parse LastDate
+//     const parsedLastDate = new Date(LastDate);
+//     if (isNaN(parsedLastDate)) {
+//       return res.status(400).json({ error: 'Invalid LastDate format' });
+//     }
+
+//     const course = await Course.create({
+//       Seat,
+//       Semester,
+//       Coursename,
+//       StateCourse,
+//       Price,
+//       Instructor,
+//       Durations,
+//       Lessons,
+//       TotalStudent,
+//       language,
+//       URL,
+//       category,
+//       size: parsedSize,
+//       Certification,
+//       CourseDescription,
+//       InstructorCourse,
+//       Review,
+//       TrainerName,
+//       LastDate: parsedLastDate,
+//       images: uploadedImages, // Save uploaded image URLs
+//     });
+
+//     res.status(201).json(course);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: error.message });
+//   }
+// };
+
+
 const CourseSave = async (req, res) => {
   try {
     const {
@@ -44,6 +122,7 @@ const CourseSave = async (req, res) => {
       Instructor,
       Durations,
       Lessons,
+      URL,
       TotalStudent,
       language,
       Certification,
@@ -52,33 +131,42 @@ const CourseSave = async (req, res) => {
       Review,
       TrainerName,
       LastDate,
-      size, // ensure `size` is destructured
+      size,
+      category, // ✅ Destructure category
     } = req.body;
 
-    // Parse JSON string if needed
-    const parsedSize = typeof size === 'string' ? JSON.parse(size) : size;
-
-    // Handle image uploads
-    const uploadedImages = [];
-    const files = Array.isArray(req.files?.images)
-      ? req.files.images
-      : [req.files?.images].filter(Boolean);
-
-    for (let file of files) {
-      const buffer = file.data;
-      const uploadResponse = await imagekit.upload({
-        file: buffer,
-        fileName: file.name,
-      });
-      uploadedImages.push(uploadResponse.url);
+    // ✅ Parse JSON string if needed
+    let parsedSize;
+    try {
+      parsedSize = typeof size === 'string' ? JSON.parse(size) : size;
+    } catch (err) {
+      return res.status(400).json({ error: 'Invalid size format' });
     }
 
-    // Parse LastDate
+    // ✅ Handle image uploads only if images are provided
+    const uploadedImages = [];
+    const filesRaw = req.files?.images;
+
+    if (filesRaw) {
+      const files = Array.isArray(filesRaw) ? filesRaw : [filesRaw];
+
+      for (let file of files) {
+        const buffer = file.data;
+        const uploadResponse = await imagekit.upload({
+          file: buffer,
+          fileName: file.name,
+        });
+        uploadedImages.push(uploadResponse.url);
+      }
+    }
+
+    // ✅ Parse and validate LastDate
     const parsedLastDate = new Date(LastDate);
     if (isNaN(parsedLastDate)) {
       return res.status(400).json({ error: 'Invalid LastDate format' });
     }
 
+    // ✅ Create course
     const course = await Course.create({
       Seat,
       Semester,
@@ -88,22 +176,24 @@ const CourseSave = async (req, res) => {
       Instructor,
       Durations,
       Lessons,
+      URL,
       TotalStudent,
       language,
-      size: parsedSize,
       Certification,
       CourseDescription,
       InstructorCourse,
       Review,
       TrainerName,
       LastDate: parsedLastDate,
-      images: uploadedImages, // Save uploaded image URLs
+      size: parsedSize,
+      category,
+      images: uploadedImages,
     });
 
     res.status(201).json(course);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: error.message });
+    console.error('CourseSave error:', error);
+    res.status(500).json({ error: error.message || 'Internal Server Error' });
   }
 };
 
@@ -129,7 +219,7 @@ const QueryDelete = async(req, res)=>{
 
 const getAllCourse = async (req, res) => {
     try {
-        const products = await Course.find();
+        const products = await Course.find().populate("category");
         res.status(200).json(products);
     } catch (error) {
         console.error("Error fetching products:", error);
@@ -150,13 +240,60 @@ const getProductById = async (req, res) => {
 };
 
 
-module.exports={
+
+// Get course by ID
+const getCourseById = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id).populate("category");
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+    res.status(200).json(course);
+  } catch (err) {
+    res.status(500).json({ message: "Server Error", error: err.message });
+  }
+};
+
+// Get related courses by category
+// const getCoursesByCategory = async (req, res) => {
+//   try {
+//     const { category } = req.query;
+
+//     if (!category) {
+//       return res.status(400).json({ message: "Category ID is required" });
+//     }
+
+//     const courses = await Course.find({ category });
+//     res.status(200).json(courses);
+//   } catch (err) {
+//     res.status(500).json({ message: "Server Error", error: err.message });
+//   }
+// };
+
+// courseController.js
+
+
+
+const getCoursesByCategory = async (req, res) => {
+   try {
+    const courses = await Course.find({ category: req.params.categoryId });
+    res.json(courses);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+  
+
+
+module.exports = {
     Querysave,
      CourseSave,
      getAllCourse,
      CourseDelete,
      getAllQuery,
      QueryDelete,
-     getProductById
+     getProductById ,
+     getCourseById,
+     getCoursesByCategory,
      
 }

@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useTabs } from "../../lib/hooks/useTabs";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import authorImg from "../../assets/img/others/author_1.jpg";
 import videoThumb from "../../assets/img/others/video_thumb.jpg";
 import { VideoPlayer } from "../videos/VideoPlayer";
 import axios from "axios"
 
 
-export const CourseDetailContent = () => {
+
+export const CourseDetailContent = ({ courseId }) => {
+  const navigate = useNavigate()  
   const { id } = useParams();
    const [product, setProduct] = useState([]);
    const [error, setError] = useState(false); 
@@ -16,12 +18,26 @@ const [loading, setLoading] = useState(false)
 
   useTabs();
 
+   useEffect(() => {
+    if (courseId) {
+      axios.get(`/api/courses/${courseId}`).then((res) => {
+        setCourse(res.data);
+      });
+    }
+  }, [courseId]);
+
+    const handleCourseClick = (courseId) => {
+    navigate(`/enroll/${courseId}`);
+  };
+
+
+
 
     useEffect(() => {
     const fetchProduct = async () => {
       try {
         setLoading(true);
-        const res = await axios.get(`https://alic-project-1.onrender.com/api/${id}`);
+        const res = await axios.get(`http://localhost:8000/api/${id}`);
         console.log(res)
         setProduct(res.data);
       } catch (err) {
@@ -46,7 +62,7 @@ const [loading, setLoading] = useState(false)
               <div className="embed-responsive embed-responsive-16by9 td_radius_10 td_mb_40">
                 <iframe
                   className="embed-responsive-item"
-                  src="https://www.youtube.com/embed/J7uTByyo4Is?si=-otZGSrxTAFjZLnHx"
+                  src={product.URL}
                   allowFullScreen
                 ></iframe>
               </div>
@@ -83,10 +99,12 @@ const [loading, setLoading] = useState(false)
                              >
                                <Link
                                  to="/enroll"
+                                
                                  className="td_btn td_style_1 td_radius_10 td_medium"
+                                 
                                >
                                  <span className="td_btn_in td_white_color td_accent_bg">
-                                   <span>Enroll Now</span>
+                                   <span onClick={handleCourseClick(courseId)}>Enroll Now</span>
                                  </span>
                                </Link>
 
@@ -407,7 +425,7 @@ const [loading, setLoading] = useState(false)
               <VideoPlayer
                 trigger={
                   <a
-                    href="#vid001"
+                    href=""
                     className="td_card_video_block td_video_open d-block"
                   >
                     <img src={videoThumb} alt="Video thumbnail" />

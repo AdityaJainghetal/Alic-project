@@ -8,6 +8,11 @@ import Bannerdisplay from './pages/Bannerdisplay';
 import QueryDisplay from './pages/QueryDisplay';
 import SuccessStory from './pages/SuccessStory';
 import SucessStroydisplay from './pages/SucessStroydisplay';
+import CategoryManagement from './pages/CategoryManagement';
+import EnquiryDisplay from './pages/EnquiryDisplay';
+import ContactDisplay from './pages/Contact/ContactDisplay';
+import EnrollDisplay from './pages/Enroll/EnrollDisplay';
+import WhatsNew from './pages/WhatsNew/WhatsNew';
 
 
 const App = () => {
@@ -22,6 +27,11 @@ const App = () => {
         <Route path='/allquerydisplay' element={<QueryDisplay/>}/>
         <Route path="/sucessStory"  element={<SuccessStory/>}/>
         <Route path="/sucessStorydisplay" element={<SucessStroydisplay/>}/>
+           <Route path="/categories" element={<CategoryManagement/>} />
+           <Route path='/enquirydisplay' element={<EnquiryDisplay/>}/>
+           <Route path='/contactdisplay' element={<ContactDisplay/>}/>
+           <Route path='/enroll' element={<EnrollDisplay/>}/>
+           <Route path='/whatsnew' element={<WhatsNew/>}/>
 
 
         
