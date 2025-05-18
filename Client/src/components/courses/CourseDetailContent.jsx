@@ -26,7 +26,7 @@ const [loading, setLoading] = useState(false)
     }
   }, [courseId]);
 
-    const handleCourseClick = (courseId) => {
+    const handleCourseClick = () => {
     navigate(`/enroll/${courseId}`);
   };
 
@@ -98,13 +98,13 @@ const [loading, setLoading] = useState(false)
                                }}
                              >
                                <Link
-                                 to="/enroll"
+                                 to={`/enroll/${courseId}`}
                                 
                                  className="td_btn td_style_1 td_radius_10 td_medium"
                                  
                                >
                                  <span className="td_btn_in td_white_color td_accent_bg">
-                                   <span onClick={handleCourseClick(courseId)}>Enroll Now</span>
+                                   <span>Enroll Now</span>
                                  </span>
                                </Link>
 

@@ -52,7 +52,7 @@ app.use(bodyparser.json())
  app.use('/enquiry', EnquiryRoute)
  app.use("/contact", ContactRoute)
  app.use("/enroll", EnrollRoute)
-//  app.use("/api", WhatsRoute)
+ app.use("/whatsnew", WhatsRoute)
  app.use("/blog", BlogRoute)
 
 

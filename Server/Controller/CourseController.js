@@ -276,7 +276,7 @@ const getCourseById = async (req, res) => {
 
 const getCoursesByCategory = async (req, res) => {
    try {
-    const courses = await Course.find({ category: req.params.categoryId });
+    const courses = await Course.find({ category: req.params.id });
     res.json(courses);
   } catch (err) {
     res.status(500).json({ message: err.message });

@@ -25,8 +25,7 @@ const EnrollSchema = new mongoose.Schema({
   city :{
     type:String
   },
-
-    productId: {
+   productId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'coursedata'
   }, 

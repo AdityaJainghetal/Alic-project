@@ -187,6 +187,7 @@ export const CouresesNine = () => {
         // Fetch main course by ID
         const res = await axios.get(`http://localhost:8000/api/courses/${id}`);
         const main = res.data;
+        console.log(main)
         setMainCourse(main);
 
         // Now fetch all courses with the same category ID

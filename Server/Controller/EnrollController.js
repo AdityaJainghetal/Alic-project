@@ -5,7 +5,8 @@ const nodemailer = require('nodemailer'); // ✅ Add this import
 
 // POST - Create enquiry
 const EnquiryProduct = async (req, res) => {
-    const { name, email, phone, city, message, productId, productName } = req.body;
+    const {id} = req.params;
+    const { name, email, phone, city, message, productName } = req.body;
 
     // Basic validation
     if (!name || !email || !message) {
@@ -22,8 +23,7 @@ const EnquiryProduct = async (req, res) => {
             phone,
             city,
             message,
-            productId,
-            productName
+            productId:id,
         });
 
         // Setup nodemailer
@@ -93,7 +93,7 @@ const EnquiryGetProduct = async (req, res) => {
 // GET - All enquiries
 const EnquiryDisplayAll = async (req, res) => {
     try {
-        const enquiries = await EnquiryModel.find();
+        const enquiries = await EnquiryModel.find().populate('productId');
         res.status(200).json({
             success: true,
             data: enquiries
@@ -112,7 +112,7 @@ const EnquiryDisplayAll = async (req, res) => {
 const EnquiryDisplayById = async (req, res) => {
     const { id } = req.params;
     try {
-        const enquiry = await EnquiryModel.findById(id);
+        const enquiry = await EnquiryModel.findById(id).populate('productId');
         if (!enquiry) {
             return res.status(404).json({
                 success: false,

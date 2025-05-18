@@ -3,7 +3,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Upload, X } from 'lucide-react';
-import { fetchcategory } from "../../api";
+import { fetchcategory } from '../../api';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
@@ -14,9 +14,7 @@ class MyUploadAdapter {
   }
 
   upload() {
-    return this.loader.file.then(file => {
-      return this.handleImageUpload(file);
-    });
+    return this.loader.file.then(file => this.handleImageUpload(file));
   }
 
   abort() {
@@ -29,8 +27,8 @@ class MyUploadAdapter {
 const WhatsNewForm = () => {
   const [imageFiles, setImageFiles] = useState([]);
   const [imagePreviews, setImagePreviews] = useState([]);
-  const [pdfFiles, setPdfFiles] = useState([]);
-  const [pdfPreviews, setPdfPreviews] = useState([]);
+  const [pdfFile, setPdfFile] = useState(null); // Changed to single PDF
+  const [pdfPreview, setPdfPreview] = useState(null); // Changed to single PDF
   const [courseName, setCourseName] = useState('');
   const [courseDescription, setCourseDescription] = useState('');
   const [category, setCategory] = useState('');
@@ -46,8 +44,8 @@ const WhatsNewForm = () => {
           setCategories(response.data);
         }
       } catch (error) {
-        console.error("Error fetching categories:", error);
-        toast.error("Failed to load categories. Please try again.");
+        console.error('Error fetching categories:', error);
+        toast.error('Failed to load categories. Please try again.');
       } finally {
         setLoading(false);
       }
@@ -64,8 +62,18 @@ const WhatsNewForm = () => {
   const handleEditorImageUpload = async (file) => {
     return new Promise((resolve, reject) => {
       if (imageFiles.length >= 5) {
-        toast.error('You can upload a maximum of 5 images in total');
-        reject('Maximum image limit reached');
+        toast.error('You can upload a maximum of 5 images');
+        reject(new Error('Maximum image limit reached'));
+        return;
+      }
+      if (!['image/jpeg', 'image/png'].includes(file.type)) {
+        toast.error('Only JPEG and PNG images are allowed');
+        reject(new Error('Invalid image type'));
+        return;
+      }
+      if (file.size > 10 * 1024 * 1024) {
+        toast.error('Image size must be less than 10MB');
+        reject(new Error('Image too large'));
         return;
       }
 
@@ -73,9 +81,7 @@ const WhatsNewForm = () => {
       reader.onload = (e) => {
         setImageFiles(prev => [...prev, file]);
         setImagePreviews(prev => [...prev, e.target.result]);
-        resolve({
-          default: URL.createObjectURL(file)
-        });
+        resolve({ default: URL.createObjectURL(file) });
       };
       reader.onerror = (error) => reject(error);
       reader.readAsDataURL(file);
@@ -84,20 +90,30 @@ const WhatsNewForm = () => {
 
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
+    const validFiles = files.filter(file => {
+      if (!['image/jpeg', 'image/png'].includes(file.type)) {
+        toast.error(`Invalid file: ${file.name}. Only JPEG and PNG are allowed.`);
+        return false;
+      }
+      if (file.size > 10 * 1024 * 1024) {
+        toast.error(`File ${file.name} is too large. Maximum size is 10MB.`);
+        return false;
+      }
+      return true;
+    });
 
-    if (files.length + imageFiles.length > 5) {
+    if (validFiles.length + imageFiles.length > 5) {
       toast.error('You can upload a maximum of 5 images');
       return;
     }
 
-    setImageFiles((prev) => [...prev, ...files.slice(0, 5 - prev.length)]);
-
+    setImageFiles((prev) => [...prev, ...validFiles.slice(0, 5 - prev.length)]);
     const newPreviews = [];
-    files.slice(0, 5 - imageFiles.length).forEach((file) => {
+    validFiles.slice(0, 5 - imageFiles.length).forEach((file) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         newPreviews.push(e.target.result);
-        if (newPreviews.length === files.length || newPreviews.length === 5 - imageFiles.length) {
+        if (newPreviews.length === validFiles.length || newPreviews.length === 5 - imageFiles.length) {
           setImagePreviews((prev) => [...prev, ...newPreviews]);
         }
       };
@@ -106,16 +122,20 @@ const WhatsNewForm = () => {
   };
 
   const handlePdfChange = (e) => {
-    const files = Array.from(e.target.files);
+    const file = e.target.files[0]; // Only allow one PDF
+    if (!file) return;
 
-    if (files.length + pdfFiles.length > 5) {
-      toast.error('You can upload a maximum of 5 PDFs');
+    if (file.type !== 'application/pdf') {
+      toast.error('Only PDF files are allowed');
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error('PDF size must be less than 10MB');
       return;
     }
 
-    setPdfFiles((prev) => [...prev, ...files.slice(0, 5 - prev.length)]);
-    const newPreviews = files.slice(0, 5 - pdfFiles.length).map(file => file.name);
-    setPdfPreviews((prev) => [...prev, ...newPreviews]);
+    setPdfFile(file);
+    setPdfPreview(file.name);
   };
 
   const removeImage = (index) => {
@@ -123,41 +143,51 @@ const WhatsNewForm = () => {
     setImagePreviews((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const removePdf = (index) => {
-    setPdfFiles((prev) => prev.filter((_, i) => i !== index));
-    setPdfPreviews((prev) => prev.filter((_, i) => i !== index));
+  const removePdf = () => {
+    setPdfFile(null);
+    setPdfPreview(null);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("title", courseName);
-    formData.append("description", courseDescription);
-    formData.append("category", category);
+    formData.append('title', courseName);
+    formData.append('description', courseDescription);
+    formData.append('category', category);
 
     imageFiles.forEach((file) => {
-      formData.append("images", file);
+      formData.append('images', file);
     });
 
-  pdfFiles.forEach((file) => {
-  formData.append("PDFbrochure", file);
-});
+    if (pdfFile) {
+      formData.append('PDFbrochure', pdfFile);
+    }
 
+    // Debug FormData contents
+    for (let [key, value] of formData.entries()) {
+      console.log(`FormData: ${key} = ${value instanceof File ? value.name : value}`);
+    }
 
     try {
       setLoading(true);
-      await axios.post("http://localhost:8000/api/create", formData, {
+      const response = await axios.post('http://localhost:8000/whatsnew/create', formData, {
         headers: {
-          Accept: "application/json",
-          // IMPORTANT: Do NOT set Content-Type here when using FormData
+          Accept: 'application/json',
         },
+        timeout: 30000, // 30-second timeout
       });
 
-      toast.success("Course created successfully!");
+      toast.success('Course created successfully!');
       resetForm();
     } catch (err) {
-      console.error(err);
-      toast.error("Failed to create course. Please try again.");
+      console.error('Submission error:', err);
+      if (err.response) {
+        toast.error(`Failed to create course: ${err.response.data.error || 'Server error'}`);
+      } else if (err.code === 'ECONNABORTED') {
+        toast.error('Request timed out. Please try again.');
+      } else {
+        toast.error('Failed to create course. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -169,8 +199,8 @@ const WhatsNewForm = () => {
     setCategory('');
     setImageFiles([]);
     setImagePreviews([]);
-    setPdfFiles([]);
-    setPdfPreviews([]);
+    setPdfFile(null);
+    setPdfPreview(null);
   };
 
   return (
@@ -282,12 +312,12 @@ const WhatsNewForm = () => {
             <span className="text-xs text-gray-500">
               {imageFiles.length >= 5
                 ? 'Maximum 5 images reached'
-                : `Upload up to 5 images (${imageFiles.length}/5)`}
+                : `Upload up to 5 JPEG/PNG images (${imageFiles.length}/5)`}
             </span>
           </div>
           <input
             type="file"
-            accept="image/*"
+            accept="image/jpeg,image/png"
             multiple
             onChange={handleImageChange}
             className="hidden"
@@ -298,50 +328,43 @@ const WhatsNewForm = () => {
 
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">
-          PDF Brochures ({pdfFiles.length}/5)
+          PDF Brochure {pdfFile ? '(1/1)' : '(0/1)'}
         </label>
 
-        {pdfPreviews.length > 0 && (
-          <div className="space-y-2 mb-4">
-            {pdfPreviews.map((preview, index) => (
-              <div key={index} className="relative group flex items-center bg-white p-2 rounded border border-gray-300">
-                <span className="truncate flex-grow">{preview}</span>
-                <button
-                  type="button"
-                  onClick={() => removePdf(index)}
-                  className="ml-2 bg-red-500 text-white rounded-full p-1"
-                >
-                  <X size={16} />
-                </button>
-              </div>
-            ))}
+        {pdfPreview && (
+          <div className="relative group flex items-center bg-white p-2 rounded border border-gray-300 mb-4">
+            <span className="truncate flex-grow">{pdfPreview}</span>
+            <button
+              type="button"
+              onClick={removePdf}
+              className="ml-2 bg-red-500 text-white rounded-full p-1"
+            >
+              <X size={16} />
+            </button>
           </div>
         )}
 
         <label
           className={`flex items-center justify-center w-full h-32 px-4 transition bg-white border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-primary-500 focus:outline-none ${
-            pdfFiles.length >= 5 ? 'opacity-50 cursor-not-allowed' : ''
+            pdfFile ? 'opacity-50 cursor-not-allowed' : ''
           }`}
         >
           <div className="flex flex-col items-center space-y-2">
             <Upload className="w-6 h-6 text-gray-500" />
             <span className="font-medium text-gray-600">
-              Drop PDFs or
+              Drop PDF or
               <span className="text-primary-600 underline ml-1">browse</span>
             </span>
             <span className="text-xs text-gray-500">
-              {pdfFiles.length >= 5
-                ? 'Maximum 5 PDFs reached'
-                : `Upload up to 5 PDFs (${pdfFiles.length}/5)`}
+              {pdfFile ? 'Maximum 1 PDF reached' : 'Upload 1 PDF'}
             </span>
           </div>
           <input
             type="file"
             accept="application/pdf"
-            multiple
             onChange={handlePdfChange}
             className="hidden"
-            disabled={pdfFiles.length >= 5}
+            disabled={pdfFile !== null}
           />
         </label>
       </div>

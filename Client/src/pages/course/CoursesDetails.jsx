@@ -16,7 +16,7 @@ export const CoursesDetails = () => {
       <CourseDetailContent courseId={id} />
 
       {/* popular */}
-      <CouresesNine />
+      <CouresesNine  />
     </Layout>
   );
 };

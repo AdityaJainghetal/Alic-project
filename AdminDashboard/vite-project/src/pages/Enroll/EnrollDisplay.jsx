@@ -41,7 +41,7 @@ const EnrollDisplay = () => {
     if (!confirm) return;
 
     try {
-      const response = await fetch(`http://localhost:8080/enroll/alldelete/${id}`, {
+      const response = await fetch(`http://localhost:8000/enroll/alldelete/${id}`, {
         method: 'DELETE',
       });
 
@@ -84,7 +84,7 @@ const EnrollDisplay = () => {
     },
     {
       name: 'Product Name',
-      selector: row => row.Coursename,
+      selector: row => row?.productId?.Coursename,
     },
     {
       name: 'Created At',

@@ -347,7 +347,7 @@ export const CoursesOne = () => {
                   src={Array.isArray(course.images) ? course.images[0] : course.images}
                   seats={course.seats || 100}
                   semesters={course.Semester || 12}
-                  subtitle={course.Instructor || `${course.title} Examination`}
+                  subtitle={course.category.name|| `${course.title} Examination`}
                   title={course.Coursename || "Judiciary Examination"}
                   description={course.CourseDescription || "A competitive exam for Civil Judge recruitment."}
                   totalRatings={course.Review || 5}
