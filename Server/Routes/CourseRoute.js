@@ -4,7 +4,7 @@ const CourseController = require("../Controller/CourseController");
 
 
 route.post("/course", CourseController.CourseSave);
-route.get("/allcourse", CourseController. getAllCourse);
+route.get("/allcourse", CourseController.getAllCourse);
 
 
 route.get("/:id", CourseController.getProductById);
