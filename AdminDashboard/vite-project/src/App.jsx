@@ -13,6 +13,8 @@ import EnquiryDisplay from './pages/EnquiryDisplay';
 import ContactDisplay from './pages/Contact/ContactDisplay';
 import EnrollDisplay from './pages/Enroll/EnrollDisplay';
 import WhatsNew from './pages/WhatsNew/WhatsNew';
+import Blog from './pages/Blog';
+import BlogDisplay from './pages/BlogDisplay';
 
 
 const App = () => {
@@ -32,6 +34,8 @@ const App = () => {
            <Route path='/contactdisplay' element={<ContactDisplay/>}/>
            <Route path='/enroll' element={<EnrollDisplay/>}/>
            <Route path='/whatsnew' element={<WhatsNew/>}/>
+           <Route path='/blog'  element={<Blog/>}/>
+           <Route path='/blogdisplay' element={<BlogDisplay/>}/>
 
 
         

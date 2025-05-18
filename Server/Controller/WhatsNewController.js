@@ -3,8 +3,7 @@ const imagekit = require("../Utils/imageKit");
 
 const fs = require("fs");
 const path = require("path");
-// const Course = require("../Module/WhatsModule");
-// const imagekit = require("../Utils/imageKit");
+
 
 const WhatsNewSave = async (req, res) => {
   try {

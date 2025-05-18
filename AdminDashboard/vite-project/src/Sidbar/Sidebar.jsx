@@ -54,6 +54,10 @@ const Sidebar = () => {
       subItems: [
         { to: '/banner', name: 'Banner' },
         { to: '/allbanner', name: 'All Banner' },
+        { to: '/blogdisplay', name: 'Blog' },
+
+
+        
       ],
     },
     {
@@ -64,6 +68,9 @@ const Sidebar = () => {
         { to: '/contactdisplay', name: 'Contact' },
         { to: '/enroll', name: 'Enroll' },
         { to: '/whatsnew', name: 'WhatsNew' },
+        { to: '/blog', name: 'Blog' },
+
+        
 
 
 

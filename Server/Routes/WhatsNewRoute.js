@@ -4,7 +4,7 @@ const upload = require("../middlewares/multer");
 const router = express.Router();
 
 
-router.post("/add", upload, enquiryController.WhatsNewSave);
+router.post("/create", upload, enquiryController.WhatsNewSave);
 
 
 

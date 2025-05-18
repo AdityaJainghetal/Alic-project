@@ -28,6 +28,7 @@ const EnquiryRoute = require("./Routes/EnquiryRoute");
 const ContactRoute = require("./Routes/ContactRoute")
 const EnrollRoute = require("./Routes/EnrollRoute");
 const WhatsRoute = require("./Routes/WhatsNewRoute")
+const BlogRoute = require("./Routes/BlogRoute")
 
 // app.use("/uploads", express.static("uploads"));
 mongoose.connect(process.env.MONGO_URI, {
@@ -35,6 +36,10 @@ mongoose.connect(process.env.MONGO_URI, {
   useUnifiedTopology: true,
 });
 let PORT = process.env.PORT || 8000
+
+
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
 // Body-parser middleware
 app.use(bodyparser.urlencoded({ extended: true }))
 app.use(bodyparser.json())
@@ -47,7 +52,8 @@ app.use(bodyparser.json())
  app.use('/enquiry', EnquiryRoute)
  app.use("/contact", ContactRoute)
  app.use("/enroll", EnrollRoute)
- app.use("/whatsnew", WhatsRoute)
+ app.use("/api", WhatsRoute)
+ app.use("/blog", BlogRoute)
 
 
 
